@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { InventoryService } from './home/services/inventory-service.service';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
    declarations: [

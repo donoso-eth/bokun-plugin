@@ -1,0 +1,27 @@
+<form [formGroup]="productSearchGroup" (ngSubmit)="searchProduct()" >
+
+  <div class="wrap-input100 validate-input" >
+    <input formControlName="productNameCtrl" class="input100" type="name" name="name" placeholder="ProductName">
+    <span class="focus-input100"></span>
+    <span class="symbol-input100">
+      <i class="fa fa-envelope" aria-hidden="true"></i>
+    </span>
+  </div>
+  <div class="wrap-input100 validate-input" >
+    <input formControlName="cityCtrl" class="input100" type="name" name="name" placeholder="City">
+    <span class="focus-input100"></span>
+    <span class="symbol-input100">
+      <i class="fa fa-envelope" aria-hidden="true"></i>
+    </span>
+  </div>
+  <div class="wrap-input100 validate-input" >
+    <input formControlName="countryCtrl" class="input100" type="name" name="name" placeholder="Country">
+    <span class="focus-input100"></span>
+    <span class="symbol-input100">
+      <i class="fa fa-envelope" aria-hidden="true"></i>
+    </span>
+  </div>
+
+</form>
+
+<pre>{{productSearchResult}}</pre>
