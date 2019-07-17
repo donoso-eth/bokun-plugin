@@ -70,6 +70,8 @@ export class InventoryService {
 
     const body = JSON.parse(JSON.stringify(request));
 
+    console.log(body);
+
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
