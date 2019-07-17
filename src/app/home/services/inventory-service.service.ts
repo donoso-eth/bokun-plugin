@@ -12,17 +12,19 @@ export class InventoryService {
   public path = 'bokun';
   public scheme = 'https';
   public apiEndPoint;
+  username: string;
+  password: string;
   constructor(
     public http: HttpClient,
   ) {
     this.apiEndPoint = `${this.scheme}://${this.host}/${this.path}`;
-
+    this.username = 'admin0';
+    this.password = 'suoersecret';
   }
 
  getPluginDefinition(): Observable<any>  {
 
-    const username = 'BOKUN';
-    const password = 'test-password';
+
 
     const url = this.apiEndPoint + '/plugin/definition';
 
@@ -33,7 +35,7 @@ export class InventoryService {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-     //    Authorization: 'Basic ' + new Buffer(username + ':' + password).toString('base64')
+        Authorization: 'Basic ' + new Buffer(this.username + ':' + this.password).toString('base64')
 
       })
     };
@@ -45,8 +47,7 @@ export class InventoryService {
 
   getProductSearch(request: any): Observable<any>  {
 
-    const username = 'BOKUN';
-    const password = 'test-password';
+
 
     const url = this.apiEndPoint + '/product/search';
 
@@ -55,7 +56,7 @@ export class InventoryService {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-     //    Authorization: 'Basic ' + new Buffer(username + ':' + password).toString('base64')
+         Authorization: 'Basic ' + new Buffer(this.username + ':' + this.password).toString('base64')
       })
     };
     return this.http.post(url, body, httpOptions);
@@ -63,8 +64,7 @@ export class InventoryService {
 
   getProductById(request: any): Observable<any>  {
 
-    const username = 'BOKUN';
-    const password = 'test-password';
+
 
     const url = this.apiEndPoint + '/product/getById';
 
@@ -75,7 +75,7 @@ export class InventoryService {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-     //    Authorization: 'Basic ' + new Buffer(username + ':' + password).toString('base64')
+         Authorization: 'Basic ' + new Buffer(this.username + ':' + this.password).toString('base64')
       })
     };
     return this.http.post(url, body, httpOptions);
