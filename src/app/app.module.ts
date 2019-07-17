@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { InventoryService } from './home/services/inventory-service.service';
-import {  HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
    declarations: [
@@ -16,6 +16,8 @@ import {  HttpClientModule } from '@angular/common/http';
       BrowserModule,
       AppRoutingModule,
       HttpClientModule,
+      FormsModule,
+      ReactiveFormsModule,
    ],
    providers: [
      InventoryService
