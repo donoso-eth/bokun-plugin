@@ -1,3 +1,5 @@
+<div style="text-align: center;">
+
 <form [formGroup]="productSearchGroup" (ngSubmit)="searchProduct()" >
 
   <div class="wrap-input100 validate-input" >
@@ -21,7 +23,24 @@
       <i class="fa fa-envelope" aria-hidden="true"></i>
     </span>
   </div>
-
+  <button type="submit">sendSearch</button>
 </form>
+<div style="max-width:500px;background: rgb(206, 240, 206); margin:auto;line-height: 40px;">{{productSearchResult}}</div>
+</div>
+<hr/>
+<div style="text-align: center;">
 
-<pre>{{productSearchResult}}</pre>
+  <form [formGroup]="productIdGroup" (ngSubmit)="idProduct()" >
+
+    <div class="wrap-input100 validate-input" >
+      <input formControlName="externalId" class="input100" type="name" name="name" placeholder="ID">
+      <span class="focus-input100"></span>
+      <span class="symbol-input100">
+        <i class="fa fa-envelope" aria-hidden="true"></i>
+      </span>
+    </div>
+
+    <button type="submit">sendSId</button>
+  </form>
+  <div style="max-width:500px;background: rgb(206, 240, 206); margin:auto;line-height: 40px;">{{productIdResult}}</div>
+  </div>

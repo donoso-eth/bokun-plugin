@@ -14,7 +14,9 @@ import { InventoryService } from './services/inventory-service.service';
 })
 export class HomeComponent implements OnInit {
   productSearchGroup: FormGroup;
-  productSearchResult: Array<any>;
+  productSearchResult: string;
+  productIdResult: string;
+  productIdGroup: FormGroup;
 
   constructor(
     private inventoryService: InventoryService,
@@ -25,27 +27,37 @@ export class HomeComponent implements OnInit {
       countryCtrl: ['', ],
       productNameCtrl: ['']
     });
+
+    this.productIdGroup = this.formBuilder.group({
+      externalId: [''],
+    });
+
    }
 
+   idProduct()  {
+    const searchRequest = {};
+    if (this.productSearchGroup.controls.cityCtrl.value !== '') {
+     // tslint:disable-next-line:no-string-literal
+     searchRequest['city'] = this.productSearchGroup.controls.cityCtrl.value;
+    }
+
+
+    this.inventoryService.getProductById(searchRequest)
+    .subscribe(result =>  { this.productIdResult = JSON.stringify(result); console.log(result); });
+
+  }
 
 
    searchProduct() {
-     const searchRequest = {};
-     if (this.productSearchGroup.controls.cityCtrl.value !== undefined) {
+     const idRequest = {};
+     if (this.productSearchGroup.controls.cityCtrl.value !== '') {
       // tslint:disable-next-line:no-string-literal
-      searchRequest['city'] = this.productSearchGroup.controls.cityCtrl.value;
-     }
-     if (this.productSearchGroup.controls.countryCtrl.value !== undefined) {
-      // tslint:disable-next-line:no-string-literal
-      searchRequest['country'] = this.productSearchGroup.controls.country.value;
-     }
-     if (this.productSearchGroup.controls.countryCtrl.value !== undefined) {
-      // tslint:disable-next-line:no-string-literal
-      searchRequest['productName'] = this.productSearchGroup.controls.productNameCtrl.value;
+      idRequest['externalId'] = this.productIdGroup.controls.externalId.value;
      }
 
-     this.inventoryService.getProductSearch(searchRequest)
-     .subscribe(result =>  { this.productSearchResult = result; console.log(result);});
+
+     this.inventoryService.getProductSearch(idRequest)
+     .subscribe(result =>  { this.productSearchResult = JSON.stringify(result); console.log(result); });
 
    }
 

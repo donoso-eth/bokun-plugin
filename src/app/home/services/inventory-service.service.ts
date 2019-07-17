@@ -33,7 +33,7 @@ export class InventoryService {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-         Authorization: 'Basic ' + new Buffer(username + ':' + password).toString('base64')
+     //    Authorization: 'Basic ' + new Buffer(username + ':' + password).toString('base64')
 
       })
     };
@@ -48,24 +48,36 @@ export class InventoryService {
     const username = 'BOKUN';
     const password = 'test-password';
 
-    const url = this.apiEndPoint + '/plugin/definition';
+    const url = this.apiEndPoint + '/product/search';
 
     const body = JSON.parse(JSON.stringify(request));
-    // url changed from this.introUrl
 
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-         Authorization: 'Basic ' + new Buffer(username + ':' + password).toString('base64')
-
+     //    Authorization: 'Basic ' + new Buffer(username + ':' + password).toString('base64')
       })
     };
-
     return this.http.post(url, body, httpOptions);
-    // .map(this.extractData)
-    // .catch(this.handleError);
   }
 
+  getProductById(request: any): Observable<any>  {
+
+    const username = 'BOKUN';
+    const password = 'test-password';
+
+    const url = this.apiEndPoint + '/product/getById';
+
+    const body = JSON.parse(JSON.stringify(request));
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+     //    Authorization: 'Basic ' + new Buffer(username + ':' + password).toString('base64')
+      })
+    };
+    return this.http.post(url, body, httpOptions);
+  }
 
  }
 
