@@ -19,6 +19,7 @@ export class HomeComponent implements OnInit {
   prodIdResult: string;
   pluginFormGroup: FormGroup;
   pluginDefinitionGroup: FormGroup;
+  productsSearch: Array<BasicProductInfo>
 
   constructor(
     private inventoryService: InventoryService,
@@ -81,8 +82,13 @@ export class HomeComponent implements OnInit {
       searchRequest['productName'] = this.productSearchGroup.controls.productNameCtrl.value;
      }
 
+
+     this.productsSearch = [];
      this.inventoryService.getProductSearch(searchRequest)
-     .subscribe(result =>  { this.productSearchResult = JSON.stringify(result); console.log(result); });
+     .subscribe(result =>  {
+
+      this.productsSearch = result;
+       console.log(this.productsSearch) });
 
    }
 
