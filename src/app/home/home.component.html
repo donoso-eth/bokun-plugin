@@ -1,6 +1,6 @@
 <div style="text-align: center;">
 
-  <mat-vertical-stepper [linear]="'true'" #stepper="matVerticalStepper">
+  <mat-horizontal-stepper [linear]="'true'" #stepper="matHorizontalStepper">
     <ng-template matStepperIcon="edit">
       ..
     </ng-template>
@@ -10,6 +10,8 @@
     </ng-template>
 
     <mat-step [stepControl]="pluginDefinitionGroup">
+        <ng-template matStepLabel>Plugin Parameters</ng-template>
+
       <mat-form-field style="display:block;width:200px;">
         <input matInput placeholder="Scheme" [formControl]="pluginDefinitionGroup.controls['scheme']" required>
         <mat-error *ngIf="pluginDefinitionGroup.controls['scheme'].invalid">error</mat-error>
@@ -86,7 +88,7 @@
 
       </mat-step>
 
-  </mat-vertical-stepper>
+  </mat-horizontal-stepper>
 <!--
   <form [formGroup]="productSearchGroup" (ngSubmit)="searchProduct()">
 
