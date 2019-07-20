@@ -1,6 +1,6 @@
-<div style="text-align: center;">
+<div  class="row" >
 
-  <mat-horizontal-stepper [linear]="'true'" #stepper="matHorizontalStepper">
+  <mat-horizontal-stepper class="col-md-6" [linear]="'true'" #stepper="matHorizontalStepper">
     <ng-template matStepperIcon="edit">
       ..
     </ng-template>
@@ -34,8 +34,7 @@
 
       <mat-form-field style="display:block;width:200px;">
         <input matInput placeholder="Port" type="text" [formControl]="pluginDefinitionGroup.controls['port']"
-          required>
-        <mat-error *ngIf="pluginDefinitionGroup.controls['port'].invalid">error</mat-error>
+         >
 
       </mat-form-field>
 
@@ -53,7 +52,7 @@
         <mat-error *ngIf="pluginDefinitionGroup.controls['password'].invalid">error</mat-error>
 
       </mat-form-field>
-      <button  [disabled]="!pluginDefinitionGroup.valid"  class="button-stepper" mat-button matStepperNext>Siguiente</button>
+      <button  [disabled]="!pluginDefinitionGroup.valid" [class.btn-primary]="pluginDefinitionGroup.valid"  mat-button matStepperNext>Siguiente</button>
 
 
 
