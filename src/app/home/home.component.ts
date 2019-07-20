@@ -7,7 +7,7 @@ import {
 } from '@angular/forms';
 import { InventoryService } from './services/inventory-service.service';
 import { MatStepper } from '@angular/material/stepper';
-import { PluginConfigurationParameter } from '../models/bokun-types';
+import { PluginConfigurationParameter, BasicProductInfo } from '../models/bokun-types';
 
 @Component({
   selector: 'app-home',
@@ -21,8 +21,9 @@ export class HomeComponent implements OnInit {
   prodIdResult: string;
   pluginFormGroup: FormGroup;
   pluginDefinitionGroup: FormGroup;
-  loading: boolean;
+  productsSearch: Array<BasicProductInfo>;
   error: boolean;
+  loading: boolean;
 
   constructor(
     private inventoryService: InventoryService,
@@ -123,8 +124,12 @@ export class HomeComponent implements OnInit {
      }
 
 
+      this.productsSearch = [];
       this.inventoryService.getProductSearch(searchRequest)
-     .subscribe(result =>  { this.productSearchResult = JSON.stringify(result); console.log(result); });
+     .subscribe(result =>  {
+
+      this.productsSearch = result;
+      console.log(this.productsSearch); });
 
    }
 
