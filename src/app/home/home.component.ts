@@ -17,11 +17,23 @@ export class HomeComponent implements OnInit {
   productSearchResult: string;
   productIdGroup: FormGroup;
   prodIdResult: string;
+  pluginFormGroup: FormGroup;
+  pluginDefinitionGroup: FormGroup;
 
   constructor(
     private inventoryService: InventoryService,
     private formBuilder: FormBuilder
     ) {
+
+    this.pluginDefinitionGroup = this.formBuilder.group({
+      scheme: ['https', Validators.required],
+      host: ['madrid-day-spa', Validators.required],
+      path: ['bokun', Validators.required],
+      port: [''],
+      username: ['bokun', Validators.required],
+      password: ['',Validators.required]
+    });
+
     this.productSearchGroup = this.formBuilder.group({
       cityCtrl: [''],
       countryCtrl: ['', ],
@@ -31,6 +43,13 @@ export class HomeComponent implements OnInit {
     this.productIdGroup = this.formBuilder.group({
       externalId: [''],
     });
+
+    this.pluginFormGroup = this.formBuilder.group({
+        pluginDefinitionGroup: this.pluginDefinitionGroup,
+        productSearchGroup : this.productSearchGroup,
+        productIdGroup: this.productIdGroup,
+    });
+
 
    }
 

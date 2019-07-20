@@ -1,5 +1,18 @@
 <div style="text-align: center;">
 
+  <mat-vertical-stepper  [linear]="'true'" #stepper="matVerticalStepper">
+    <ng-template matStepperIcon="edit">
+      ..
+    </ng-template>
+
+    <ng-template matStepperIcon="done">
+      OK
+    </ng-template>
+
+    <mat-step  [stepControl]="treatmentsFormGroup">
+     </mat-step>
+     </mat-vertical-stepper>
+
 <form [formGroup]="productSearchGroup" (ngSubmit)="searchProduct()" >
 
   <div class="wrap-input100 validate-input" >
