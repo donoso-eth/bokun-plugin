@@ -1,10 +1,5 @@
 
-export interface BokunSlot {
-  name: string;
-  slots: number;
-  couple: boolean;
-  shower: boolean;
-}
+
 
 
 //// AQUI EMPEZAMOS
@@ -29,6 +24,11 @@ export interface PluginConfigurationParameter {
   required: boolean;
 }
 
+export interface PluginConfigurationParameterValue {
+  name: string;
+  value: string;
+}
+
 export enum PluginParameterDataType {
   Long = 'LONG',
   Double = 'DOUBLE',
@@ -41,34 +41,34 @@ export interface SearchProductRequest {
   productName?: string;
   country?: string;
   city?: string;
-  parameters: Array<PluginConfigurationParameter>;
+  parameters: Array<PluginConfigurationParameterValue>;
 }
 
 export interface GetProductByIDRequest {
   externalId: string;
-  parameters: Array<PluginConfigurationParameter>;
+  parameters: Array<PluginConfigurationParameterValue>;
 }
 
 export interface ProductsAvailabilityRequest {
   range: DatePeriod;
   requiredCapacity: number;
   externalProductIds: Array<string>;
-  parameters: Array<PluginConfigurationParameter>;
+  parameters: Array<PluginConfigurationParameterValue>;
 }
 
 export interface ProductAvailabilityRequest {
   range: DatePeriod;
   productId: string;
-  parameters: Array<PluginConfigurationParameter>;
+  parameters: Array<PluginConfigurationParameterValue>;
 }
 
 export interface ReservationRequest {
-  parameters: Array<PluginConfigurationParameter>;
+  parameters: Array<PluginConfigurationParameterValue>;
   reservationData: ReservationData;
 }
 
 export interface ConfirmBookingRequest {
-  parameters: Array<PluginConfigurationParameter>;
+  parameters: Array<PluginConfigurationParameterValue>;
   reservationConfirmationCode: string;
   reservationData: ReservationData;
   confirmationData: ConfirmationData;
@@ -76,7 +76,7 @@ export interface ConfirmBookingRequest {
 
 export interface CancelBookingRequest {
 
-  parameters: Array<PluginConfigurationParameter>;
+  parameters: Array<PluginConfigurationParameterValue>;
   bookingConfirmationCode: string;
   agentCode?: string;
 }

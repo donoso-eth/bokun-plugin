@@ -52,37 +52,48 @@
         <mat-error *ngIf="pluginDefinitionGroup.controls['password'].invalid">error</mat-error>
 
       </mat-form-field>
-      <button  [disabled]="!pluginDefinitionGroup.valid" [class.btn-primary]="pluginDefinitionGroup.valid"  mat-button matStepperNext>Siguiente</button>
+      <div style="position:relative;">
+      <button   [disabled]="!pluginDefinitionGroup.valid" [class.btn-primary]="pluginDefinitionGroup.valid"  mat-button (click)="definitions(stepper)" >Siguiente</button>
+      <mat-spinner *ngIf="loading" style="position:absolute;top: 7px; left: 4px;" color="success"
+      diameter="35">
+    </mat-spinner>
+  </div>
+    <mat-error *ngIf="error">sorry there is aproblem with the server</mat-error>
 
 
 
     </mat-step>
 
     <mat-step [stepControl]="productSearchGroup">
+
+      {{productSearchGroup.valid}}
+
         <mat-form-field style="display:block;width:200px;">
           <input matInput placeholder="City" [formControl]="productSearchGroup.controls['cityCtrl']" required>
-          <mat-error *ngIf="productSearchGroup.controls['cityCtrl'].invalid">error</mat-error>
 
         </mat-form-field>
 
 
         <mat-form-field style="display:block;width:200px;">
           <input matInput placeholder="Country" [formControl]="productSearchGroup.controls['countryCtrl']" required>
-          <mat-error *ngIf="productSearchGroup.controls['countryCtrl'].invalid">error</mat-error>
 
         </mat-form-field>
 
 
         <mat-form-field style="display:block;width:200px;">
           <input matInput placeholder="ProductName" type="text" [formControl]="productSearchGroup.controls['productNameCtrl']" required>
-          <mat-error *ngIf="productSearchGroup.controls['productNameCtrl'].invalid">error</mat-error>
 
         </mat-form-field>
 
         <div>
-
-            <button  [disabled]="!productSearchGroup.valid"  (click)="searchProduct()" class="button-stepper" mat-button matStepperNext>Siguiente</button>
-          </div>
+            <div style="position:relative;">
+                <button     class="btn-primary"  mat-button (click)="searchProduct(stepper)" >Siguiente</button>
+                <mat-spinner *ngIf="loading" style="position:absolute;top: 7px; left: 4px;" color="success"
+                diameter="35">
+              </mat-spinner>
+            </div>
+          <mat-error *ngIf="error">sorry there is aproblem with the server</mat-error>
+                 </div>
 
 
       </mat-step>

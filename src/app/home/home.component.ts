@@ -6,6 +6,8 @@ import {
   FormControl
 } from '@angular/forms';
 import { InventoryService } from './services/inventory-service.service';
+import { MatStepper } from '@angular/material/stepper';
+import { PluginConfigurationParameter } from '../models/bokun-types';
 
 @Component({
   selector: 'app-home',
@@ -19,6 +21,8 @@ export class HomeComponent implements OnInit {
   prodIdResult: string;
   pluginFormGroup: FormGroup;
   pluginDefinitionGroup: FormGroup;
+  loading: boolean;
+  error: boolean;
 
   constructor(
     private inventoryService: InventoryService,
@@ -27,18 +31,19 @@ export class HomeComponent implements OnInit {
 
     this.pluginDefinitionGroup = this.formBuilder.group({
       scheme: ['https', Validators.required],
-      host: ['madrid-day-spa', Validators.required],
+      host: ['madrid-day-spa.com', Validators.required],
       path: ['bokun', Validators.required],
       port: [''],
       username: ['bokun', Validators.required],
-      password: ['', Validators.required]
+      password: ['sPamaDRidY#', Validators.required]
     });
 
     this.productSearchGroup = this.formBuilder.group({
       cityCtrl: [''],
-      countryCtrl: ['', ],
+      countryCtrl: [''],
       productNameCtrl: ['']
     });
+
 
     this.productIdGroup = this.formBuilder.group({
       externalId: [''],
@@ -59,6 +64,22 @@ export class HomeComponent implements OnInit {
 
    }
 
+   definitions(stepper: MatStepper) {
+     this.error = false ;
+     this.loading = true;
+     this.inventoryService.getPluginDefinition().subscribe(x => {
+      stepper.next();
+      this.loading = false;
+    }, error =>  {
+      this.error = true ;
+      this.loading = false;
+
+      console.log(error); });
+
+   }
+
+
+
    idProduct()  {
     const idRequest = {};
     if (this.productIdGroup.controls.externalId.value !== '') {
@@ -72,22 +93,37 @@ export class HomeComponent implements OnInit {
   }
 
 
-   searchProduct() {
-     const searchRequest = {};
-     if (this.productSearchGroup.controls.cityCtrl.value !== '') {
+   searchProduct(stepper: MatStepper) {
+
+      console.log(this.productSearchGroup.controls) ;
+      // .forEach(x => {
+      //   console.log(x);
+      // });
+
+
+    //   const parameters: Array<PluginConfigurationParameter> = [
+    //   {
+    //     name: string;
+    //     type: PluginParameterDataType;
+    //     required: boolean;
+    //   }
+    // ];
+      const searchRequest = {};
+      if (this.productSearchGroup.controls.cityCtrl.value !== '') {
       // tslint:disable-next-line:no-string-literal
       searchRequest['externalId'] = this.productSearchGroup.controls.cityCtrl.value;
      }
-     if (this.productSearchGroup.controls.countryCtrl.value !== '') {
+      if (this.productSearchGroup.controls.countryCtrl.value !== '') {
       // tslint:disable-next-line:no-string-literal
       searchRequest['country'] = this.productSearchGroup.controls.countryCtrl.value;
      }
-     if (this.productSearchGroup.controls.countryCtrl.value !== '') {
+      if (this.productSearchGroup.controls.productNameCtrl.value !== '') {
       // tslint:disable-next-line:no-string-literal
       searchRequest['productName'] = this.productSearchGroup.controls.productNameCtrl.value;
      }
 
-     this.inventoryService.getProductSearch(searchRequest)
+
+      this.inventoryService.getProductSearch(searchRequest)
      .subscribe(result =>  { this.productSearchResult = JSON.stringify(result); console.log(result); });
 
    }

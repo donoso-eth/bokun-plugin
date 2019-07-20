@@ -42,6 +42,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
       MatRadioModule,
       MatOptionModule,
       MatSelectModule,
+      MatProgressSpinnerModule,
       NgbModule
    ],
    providers: [
