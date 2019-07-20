@@ -1,6 +1,6 @@
 <div style="text-align: center;">
 
-  <mat-vertical-stepper  [linear]="'true'" #stepper="matVerticalStepper">
+  <mat-vertical-stepper [linear]="'true'" #stepper="matVerticalStepper">
     <ng-template matStepperIcon="edit">
       ..
     </ng-template>
@@ -9,43 +9,119 @@
       OK
     </ng-template>
 
-    <mat-step  [stepControl]="treatmentsFormGroup">
-     </mat-step>
-     </mat-vertical-stepper>
+    <mat-step [stepControl]="pluginDefinitionGroup">
+      <mat-form-field style="display:block;width:200px;">
+        <input matInput placeholder="Scheme" [formControl]="pluginDefinitionGroup.controls['scheme']" required>
+        <mat-error *ngIf="pluginDefinitionGroup.controls['scheme'].invalid">error</mat-error>
 
-<form [formGroup]="productSearchGroup" (ngSubmit)="searchProduct()" >
+      </mat-form-field>
 
-  <div class="wrap-input100 validate-input" >
-    <input formControlName="productNameCtrl" class="input100" type="name" name="name" placeholder="ProductName">
-    <span class="focus-input100"></span>
-    <span class="symbol-input100">
-      <i class="fa fa-envelope" aria-hidden="true"></i>
-    </span>
+
+      <mat-form-field style="display:block;width:200px;">
+        <input matInput placeholder="host" [formControl]="pluginDefinitionGroup.controls['host']" required>
+        <mat-error *ngIf="pluginDefinitionGroup.controls['host'].invalid">error</mat-error>
+
+      </mat-form-field>
+
+
+      <mat-form-field style="display:block;width:200px;">
+        <input matInput placeholder="Path" type="text" [formControl]="pluginDefinitionGroup.controls['path']" required>
+        <mat-error *ngIf="pluginDefinitionGroup.controls['path'].invalid">error</mat-error>
+
+      </mat-form-field>
+
+      <mat-form-field style="display:block;width:200px;">
+        <input matInput placeholder="Port" type="text" [formControl]="pluginDefinitionGroup.controls['port']"
+          required>
+        <mat-error *ngIf="pluginDefinitionGroup.controls['port'].invalid">error</mat-error>
+
+      </mat-form-field>
+
+
+      <mat-form-field style="display:block;width:200px;">
+        <input matInput placeholder="Username" type="text" [formControl]="pluginDefinitionGroup.controls['username']"
+          required>
+        <mat-error *ngIf="pluginDefinitionGroup.controls['username'].invalid">error</mat-error>
+
+      </mat-form-field>
+
+      <mat-form-field style="display:block;width:200px;">
+        <input matInput placeholder="Password" type="password" [formControl]="pluginDefinitionGroup.controls['password']"
+          required>
+        <mat-error *ngIf="pluginDefinitionGroup.controls['password'].invalid">error</mat-error>
+
+      </mat-form-field>
+      <button  [disabled]="!pluginDefinitionGroup.valid"  class="button-stepper" mat-button matStepperNext>Siguiente</button>
+
+
+
+    </mat-step>
+
+    <mat-step [stepControl]="productSearchGroup">
+        <mat-form-field style="display:block;width:200px;">
+          <input matInput placeholder="City" [formControl]="productSearchGroup.controls['cityCtrl']" required>
+          <mat-error *ngIf="productSearchGroup.controls['cityCtrl'].invalid">error</mat-error>
+
+        </mat-form-field>
+
+
+        <mat-form-field style="display:block;width:200px;">
+          <input matInput placeholder="Country" [formControl]="productSearchGroup.controls['countryCtrl']" required>
+          <mat-error *ngIf="productSearchGroup.controls['countryCtrl'].invalid">error</mat-error>
+
+        </mat-form-field>
+
+
+        <mat-form-field style="display:block;width:200px;">
+          <input matInput placeholder="ProductName" type="text" [formControl]="productSearchGroup.controls['productNameCtrl']" required>
+          <mat-error *ngIf="productSearchGroup.controls['productNameCtrl'].invalid">error</mat-error>
+
+        </mat-form-field>
+
+        <div>
+
+            <button  [disabled]="!productSearchGroup.valid"  (click)="searchProduct()" class="button-stepper" mat-button matStepperNext>Siguiente</button>
+          </div>
+
+
+      </mat-step>
+
+  </mat-vertical-stepper>
+<!--
+  <form [formGroup]="productSearchGroup" (ngSubmit)="searchProduct()">
+
+    <div class="wrap-input100 validate-input">
+      <input formControlName="productNameCtrl" class="input100" type="name" name="name" placeholder="ProductName">
+      <span class="focus-input100"></span>
+      <span class="symbol-input100">
+        <i class="fa fa-envelope" aria-hidden="true"></i>
+      </span>
+    </div>
+    <div class="wrap-input100 validate-input">
+      <input formControlName="cityCtrl" class="input100" type="name" name="name" placeholder="City">
+      <span class="focus-input100"></span>
+      <span class="symbol-input100">
+        <i class="fa fa-envelope" aria-hidden="true"></i>
+      </span>
+    </div>
+    <div class="wrap-input100 validate-input">
+      <input formControlName="countryCtrl" class="input100" type="name" name="name" placeholder="Country">
+      <span class="focus-input100"></span>
+      <span class="symbol-input100">
+        <i class="fa fa-envelope" aria-hidden="true"></i>
+      </span>
+    </div>
+    <button type="submit">sendSearch</button>
+  </form>
+  <div style="max-width:500px;background: rgb(206, 240, 206); margin:auto;line-height: 40px;">{{productSearchResult}}
   </div>
-  <div class="wrap-input100 validate-input" >
-    <input formControlName="cityCtrl" class="input100" type="name" name="name" placeholder="City">
-    <span class="focus-input100"></span>
-    <span class="symbol-input100">
-      <i class="fa fa-envelope" aria-hidden="true"></i>
-    </span>
-  </div>
-  <div class="wrap-input100 validate-input" >
-    <input formControlName="countryCtrl" class="input100" type="name" name="name" placeholder="Country">
-    <span class="focus-input100"></span>
-    <span class="symbol-input100">
-      <i class="fa fa-envelope" aria-hidden="true"></i>
-    </span>
-  </div>
-  <button type="submit">sendSearch</button>
-</form>
-<div style="max-width:500px;background: rgb(206, 240, 206); margin:auto;line-height: 40px;">{{productSearchResult}}</div>
 </div>
-<hr/>
+<hr />
 <div style="text-align: center;">
 
-  <form [formGroup]="productIdGroup" (ngSubmit)="idProduct()" >
+  <form [formGroup]="productIdGroup" (ngSubmit)="idProduct()">
 
-    <div class="wrap-input100 validate-input" >
+    <div class="wrap-input100 validate-input">
       <input formControlName="externalId" class="input100" type="name" name="name" placeholder="ID">
       <span class="focus-input100"></span>
       <span class="symbol-input100">
@@ -54,8 +130,22 @@
     </div>
 
     <button type="submit">sendSId</button>
-  </form>
+  </form> -->
+<!--
+  <mat-step [stepControl]="pluginDefinitionGroup">
+  <mat-form-field>
+
+          <input matInput (click)="picker.open()" [min]="minDate" [max]="maxDate"
+            [matDatepicker]="picker" (ngModelChange)="ChangeDateMethod($event)"  [(ngModel)]="dateTes" disabled>
+
+          <mat-datepicker-toggle class="toggle" matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker   opened="true"  #picker disabled="false"></mat-datepicker>
+        </mat-form-field>
+  </mat-step> -->
+
+
+
   <div style="max-width:500px;background: rgb(206, 240, 206); margin:auto;line-height: 40px;">
     <span>{{prodIdResult}}</span>
-      </div>
   </div>
+</div>

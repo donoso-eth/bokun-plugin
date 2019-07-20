@@ -31,7 +31,7 @@ export class HomeComponent implements OnInit {
       path: ['bokun', Validators.required],
       port: [''],
       username: ['bokun', Validators.required],
-      password: ['',Validators.required]
+      password: ['', Validators.required]
     });
 
     this.productSearchGroup = this.formBuilder.group({
@@ -49,6 +49,12 @@ export class HomeComponent implements OnInit {
         productSearchGroup : this.productSearchGroup,
         productIdGroup: this.productIdGroup,
     });
+
+    this.inventoryService.formData.subscribe(res => console.log(res));
+
+
+    this.pluginFormGroup.valueChanges
+    .subscribe( obj => this.inventoryService.formData.next(obj));
 
 
    }

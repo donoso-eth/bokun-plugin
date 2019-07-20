@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
+import { ReplaySubject } from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class InventoryService {
-
+  public formData = new ReplaySubject<any>();
   public host = 'madrid-day-spa.com';
   public path = 'bokun';
   public scheme = 'https';
@@ -21,6 +21,8 @@ export class InventoryService {
     this.username = 'admin';
     this.password = 'supersecret';
   }
+
+
 
  getPluginDefinition(): Observable<any>  {
 
