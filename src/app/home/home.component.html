@@ -1,4 +1,4 @@
-<div  class="row" >
+<div class="row">
 
   <mat-horizontal-stepper class="col-md-6" [linear]="'true'" #stepper="matHorizontalStepper">
     <ng-template matStepperIcon="edit">
@@ -10,7 +10,7 @@
     </ng-template>
 
     <mat-step [stepControl]="pluginDefinitionGroup">
-        <ng-template matStepLabel>Plugin Parameters</ng-template>
+      <ng-template matStepLabel>Plugin Parameters</ng-template>
 
       <mat-form-field style="display:block;width:200px;">
         <input matInput placeholder="Scheme" [formControl]="pluginDefinitionGroup.controls['scheme']" required>
@@ -33,8 +33,7 @@
       </mat-form-field>
 
       <mat-form-field style="display:block;width:200px;">
-        <input matInput placeholder="Port" type="text" [formControl]="pluginDefinitionGroup.controls['port']"
-         >
+        <input matInput placeholder="Port" type="text" [formControl]="pluginDefinitionGroup.controls['port']">
 
       </mat-form-field>
 
@@ -47,18 +46,18 @@
       </mat-form-field>
 
       <mat-form-field style="display:block;width:200px;">
-        <input matInput placeholder="Password" type="password" [formControl]="pluginDefinitionGroup.controls['password']"
-          required>
+        <input matInput placeholder="Password" type="password"
+          [formControl]="pluginDefinitionGroup.controls['password']" required>
         <mat-error *ngIf="pluginDefinitionGroup.controls['password'].invalid">error</mat-error>
 
       </mat-form-field>
       <div style="position:relative;">
-      <button   [disabled]="!pluginDefinitionGroup.valid" [class.btn-primary]="pluginDefinitionGroup.valid"  mat-button (click)="definitions(stepper)" >Siguiente</button>
-      <mat-spinner *ngIf="loading" style="position:absolute;top: 7px; left: 4px;" color="success"
-      diameter="35">
-    </mat-spinner>
-  </div>
-    <mat-error *ngIf="error">sorry there is aproblem with the server</mat-error>
+        <button [disabled]="!pluginDefinitionGroup.valid" [class.btn-primary]="pluginDefinitionGroup.valid" mat-button
+          (click)="definitions(stepper)">Siguiente</button>
+        <mat-spinner *ngIf="loading" style="position:absolute;top: 7px; left: 4px;" color="success" diameter="35">
+        </mat-spinner>
+      </div>
+      <mat-error *ngIf="error">sorry there is aproblem with the server</mat-error>
 
 
 
@@ -68,55 +67,58 @@
       <ng-template matStepLabel>Product Search</ng-template>
 
 
-        <mat-form-field style="display:block;width:200px;">
-          <input matInput placeholder="City" [formControl]="productSearchGroup.controls['cityCtrl']" required>
+      <mat-form-field style="display:block;width:200px;">
+        <input matInput placeholder="City" [formControl]="productSearchGroup.controls['cityCtrl']" required>
 
-        </mat-form-field>
-
-
-        <mat-form-field style="display:block;width:200px;">
-          <input matInput placeholder="Country" [formControl]="productSearchGroup.controls['countryCtrl']" required>
-
-        </mat-form-field>
+      </mat-form-field>
 
 
-        <mat-form-field style="display:block;width:200px;">
-          <input matInput placeholder="ProductName" type="text" [formControl]="productSearchGroup.controls['productNameCtrl']" required>
+      <mat-form-field style="display:block;width:200px;">
+        <input matInput placeholder="Country" [formControl]="productSearchGroup.controls['countryCtrl']" required>
 
-        </mat-form-field>
-
-        <div>
-            <div style="position:relative;">
-                <button     class="btn-primary"  mat-button (click)="searchProduct(stepper)" >Siguiente</button>
-                <mat-spinner *ngIf="loading" style="position:absolute;top: 7px; left: 4px;" color="success"
-                diameter="35">
-              </mat-spinner>
-            </div>
-          <mat-error *ngIf="error">sorry there is aproblem with the server</mat-error>
-                 </div>
+      </mat-form-field>
 
 
-      </mat-step>
-      <mat-step [stepControl]="productIdGroup">
+      <mat-form-field style="display:block;width:200px;">
+        <input matInput placeholder="ProductName" type="text"
+          [formControl]="productSearchGroup.controls['productNameCtrl']" required>
+
+      </mat-form-field>
+
+      <div>
+        <div style="position:relative;">
+          <button class="btn-primary" mat-button (click)="searchProduct(stepper)">Siguiente</button>
+          <mat-spinner *ngIf="loading" style="position:absolute;top: 7px; left: 4px;" color="success" diameter="35">
+          </mat-spinner>
+        </div>
+        <mat-error *ngIf="error">sorry there is aproblem with the server</mat-error>
+      </div>
+
+
+    </mat-step>
+
+    <mat-step [stepControl]="productIdGroup">
       <ng-template matStepLabel>Product Search</ng-template>
       <mat-form-field>
-        <mat-label>Toppings</mat-label>
-        <mat-select [formControl]="idProduct" multiple>
+        <mat-label>Products</mat-label>
+        <mat-select [formControl]="productIdGroup.controls['externalId']" >
           <mat-option *ngFor="let product of productsSearch" [value]="product.id">{{product.name}}</mat-option>
         </mat-select>
       </mat-form-field>
+
+      <div>
+        <div style="position:relative;">
+          <button [disabled]="!productIdGroup.valid" [class.btn-primary]="productIdGroup.valid" mat-button
+            (click)="searchProductId(stepper)">Siguiente</button>
+          <mat-spinner *ngIf="loading" style="position:absolute;top: 7px; left: 4px;" color="success" diameter="35">
+          </mat-spinner>
+        </div>
+        <mat-error *ngIf="error">sorry there is aproblem with the server</mat-error>
+      </div>
+
     </mat-step>
-    <div>
-    <div style="position:relative;">
-      <button     class="btn-primary"  mat-button (click)="searchProductId(stepper)" >Siguiente</button>
-      <mat-spinner *ngIf="loading" style="position:absolute;top: 7px; left: 4px;" color="success"
-      diameter="35">
-    </mat-spinner>
-  </div>
-<mat-error *ngIf="error">sorry there is aproblem with the server</mat-error>
-       </div>
   </mat-horizontal-stepper>
-<!--
+  <!--
   <form [formGroup]="productSearchGroup" (ngSubmit)="searchProduct()">
 
     <div class="wrap-input100 validate-input">
@@ -160,7 +162,7 @@
 
     <button type="submit">sendSId</button>
   </form> -->
-<!--
+  <!--
   <mat-step [stepControl]="pluginDefinitionGroup">
   <mat-form-field>
 

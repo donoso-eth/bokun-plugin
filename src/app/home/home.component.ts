@@ -48,7 +48,7 @@ export class HomeComponent implements OnInit {
 
 
     this.productIdGroup = this.formBuilder.group({
-      externalId: [''],
+      externalId: ['', Validators.required],
     });
 
     this.pluginFormGroup = this.formBuilder.group({
@@ -93,7 +93,13 @@ export class HomeComponent implements OnInit {
     .subscribe(result =>  { this.prodIdResult = JSON.stringify(result); console.log(result); });
 
   }
-    searchProductId(stepper: MatStepper) {}
+    searchProductId(stepper: MatStepper) {
+      console.log(this.productIdGroup.getRawValue());
+      // tslint:disable-next-line:no-string-literal
+      console.log(this.productsSearch.filter(x =>  x.id === this.productIdGroup.controls['externalId'].value));
+
+
+    }
 
     searchProduct(stepper: MatStepper) {
 
@@ -113,13 +119,20 @@ export class HomeComponent implements OnInit {
       searchRequest['productName'] = this.productSearchGroup.controls.productNameCtrl.value;
      }
 
-
+      this.error = false ;
+      this.loading = true;
       this.productsSearch = [];
       this.inventoryService.getProductSearch(searchRequest)
      .subscribe(result =>  {
 
       this.productsSearch = result;
-      console.log(this.productsSearch); });
+      stepper.next();
+      this.loading = false;
+     }, error =>  {
+      this.error = true ;
+      this.loading = false;
+
+      console.log(error); });
 
    }
 
