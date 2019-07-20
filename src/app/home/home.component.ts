@@ -46,6 +46,7 @@ export class HomeComponent implements OnInit {
     });
 
 
+
     this.productIdGroup = this.formBuilder.group({
       externalId: [''],
     });
@@ -92,23 +93,12 @@ export class HomeComponent implements OnInit {
     .subscribe(result =>  { this.prodIdResult = JSON.stringify(result); console.log(result); });
 
   }
+    searchProductId(stepper: MatStepper) {}
 
-
-   searchProduct(stepper: MatStepper) {
+    searchProduct(stepper: MatStepper) {
 
       console.log(this.productSearchGroup.controls) ;
-      // .forEach(x => {
-      //   console.log(x);
-      // });
 
-
-    //   const parameters: Array<PluginConfigurationParameter> = [
-    //   {
-    //     name: string;
-    //     type: PluginParameterDataType;
-    //     required: boolean;
-    //   }
-    // ];
       const searchRequest = {};
       if (this.productSearchGroup.controls.cityCtrl.value !== '') {
       // tslint:disable-next-line:no-string-literal
