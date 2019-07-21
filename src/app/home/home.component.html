@@ -134,24 +134,46 @@
 
     </mat-step>
 
-    <mat-step >
+    <mat-step [stepControl]="getAvailableGroup">
       <ng-template matStepLabel>Get Available CHECK</ng-template>
 
       <mat-form-field>
         <mat-label>Select Products</mat-label>
-        <mat-select multiple [formControl]="productIdGroup.controls['externalId']" >
+        <mat-select multiple [formControl]="getAvailableGroup.controls['prodIds']" >
           <mat-option *ngFor="let product of productsSearch" [value]="product.id">{{product.name}}</mat-option>
         </mat-select>
       </mat-form-field>
 
       <mat-form-field>
-        <input matInput [matDatepicker]="picker" placeholder="Choose a date">
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
+        <input matInput [formControl]="getAvailableGroup.controls['startDate']" [matDatepicker]="startPicker" placeholder="Choose a date">
+        <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+        <mat-datepicker #startPicker></mat-datepicker>
       </mat-form-field>
 
-      </mat-step>
+      <mat-form-field>
+        <input matInput [formControl]="getAvailableGroup.controls['endDate']"  [matDatepicker]="endPicker" placeholder="Choose a date">
+        <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+        <mat-datepicker #endPicker></mat-datepicker>
+      </mat-form-field>
 
+
+
+      <div>
+      <div style="position:relative;">
+        <button *ngIf="getAvailableFlag==0" [disabled]="!getAvailableGroup.valid" [class.btn-primary]="getAvailableGroup.valid" mat-button
+          (click)="getAvailable(stepper)">Post Seatch</button>
+          <button *ngIf="getAvailableFlag==2" class="btn-primary" mat-button
+          (click)="searchProductIDValidate()">Validate Types</button>
+          <button *ngIf="getAvailableFlag==4"  class="btn-primary"  mat-button
+          (click)="goNext(stepper)">Next</button>
+        <mat-spinner *ngIf="getAvailableFlag==1 || getAvailableFlag==3"  style="position:absolute;top: 7px; left: 4px;" color="success" diameter="35">
+        </mat-spinner>
+
+      </div>
+      <mat-error *ngIf="getAvailableFlag==5">sorry there is aproblem with the server</mat-error>
+    </div>
+
+  </mat-step>
   </mat-vertical-stepper>
   <!--
   <form [formGroup]="productSearchGroup" (ngSubmit)="searchProduct()">

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -11,6 +11,7 @@ import { PluginConfigurationParameter, BasicProductInfo, ProductDescription } fr
 import { GuardsCheckEnd } from '@angular/router';
 import { ValidationService } from './services/validation.service';
 import { defs } from './services/definitions';
+import { MatDatepicker } from '@angular/material/datepicker';
 
 enum SearchStatus {
   Input,
@@ -34,6 +35,7 @@ export class HomeComponent implements OnInit {
   prodIdResult: string;
   pluginFormGroup: FormGroup;
   pluginDefinitionGroup: FormGroup;
+  getAvailableGroup: FormGroup;
 
   productsSearch: Array<BasicProductInfo>;
   productIDSearch: ProductDescription;
@@ -42,6 +44,8 @@ export class HomeComponent implements OnInit {
   loading: boolean;
   searchFlag: SearchStatus;
   searchIDFlag: SearchStatus;
+  getAvailableFlag: SearchStatus;
+
 
   constructor(
     private inventoryService: InventoryService,
@@ -50,6 +54,7 @@ export class HomeComponent implements OnInit {
   ) {
     this.searchFlag = SearchStatus.Input;
     this.searchIDFlag = SearchStatus.Input;
+    this.getAvailableFlag = SearchStatus.Input;
 
     this.pluginDefinitionGroup = this.formBuilder.group({
       scheme: ['https', Validators.required],
@@ -76,13 +81,23 @@ export class HomeComponent implements OnInit {
     this.productIdGroup.valueChanges
       .subscribe(() => this.searchIDFlag = SearchStatus.Input);
 
+    this.getAvailableGroup = this.formBuilder.group({
+        prodIds: ['', Validators.required],
+        startDate: [new Date(), Validators.required],
+        endDate: [new Date(), Validators.required]
+      });
 
+    // tslint:disable-next-line:no-string-literal
+    this.getAvailableGroup.controls['startDate'].valueChanges.subscribe(x => {
+      this.endPicker.select(x);
 
+    });
 
     this.pluginFormGroup = this.formBuilder.group({
       pluginDefinitionGroup: this.pluginDefinitionGroup,
       productSearchGroup: this.productSearchGroup,
       productIdGroup: this.productIdGroup,
+      getAvailableGroup: this.getAvailableGroup
     });
 
     this.pluginFormGroup.valueChanges
@@ -90,6 +105,10 @@ export class HomeComponent implements OnInit {
 
 
   }
+
+
+  @ViewChild('startPicker', {static: true}) public startPicker: MatDatepicker<any>;
+  @ViewChild('endPicker', {static: true}) public endPicker: MatDatepicker<any>;
 
   definitions(stepper: MatStepper) {
     this.error = false;
@@ -178,6 +197,38 @@ export class HomeComponent implements OnInit {
       this.searchIDFlag = SearchStatus.Error;
     }
   }
+
+// GET AVAILABLE
+getAvailable(stepper: MatStepper) {
+  const idRequest = {};
+  if (this.productIdGroup.controls.externalId.value !== '') {
+    // tslint:disable-next-line:no-string-literal
+    idRequest['externalId'] = this.productIdGroup.controls.externalId.value;
+  }
+  this.searchIDFlag = SearchStatus.Sending;
+  this.inventoryService.getProductById(idRequest)
+    .subscribe(result => {
+      this.productIDSearch = result;
+      this.searchIDFlag = SearchStatus.Received;
+    }, error => {
+      this.searchIDFlag = SearchStatus.Error;
+    });
+}
+
+async getAvailableValidate() {
+  const isBodyValid = await this.valifationService
+  .isRequestBodyValid(this.productIDSearch, defs.definitions.get, 'getAvailable');
+  console.log(isBodyValid);
+  if (isBodyValid) {
+    this.searchIDFlag = SearchStatus.Checked;
+  } else {
+    this.searchIDFlag = SearchStatus.Error;
+  }
+}
+
+
+
+
 
   ngOnInit() {
   }
