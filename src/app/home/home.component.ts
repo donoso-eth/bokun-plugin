@@ -84,7 +84,8 @@ export class HomeComponent implements OnInit {
     this.getAvailableGroup = this.formBuilder.group({
         prodIds: ['', Validators.required],
         startDate: [new Date(), Validators.required],
-        endDate: [new Date(), Validators.required]
+        endDate: [new Date(), Validators.required],
+        requiredCapacity: ['', Validators.required]
       });
 
     // tslint:disable-next-line:no-string-literal
@@ -200,29 +201,28 @@ export class HomeComponent implements OnInit {
 
 // GET AVAILABLE
 getAvailable(stepper: MatStepper) {
-  const idRequest = {};
+  const getAvailableRequest = {};
   if (this.productIdGroup.controls.externalId.value !== '') {
     // tslint:disable-next-line:no-string-literal
-    idRequest['externalId'] = this.productIdGroup.controls.externalId.value;
+    getAvailableRequest ['prodIds'] = this.productIdGroup.controls.prodIds.value;
   }
-  this.searchIDFlag = SearchStatus.Sending;
-  this.inventoryService.getProductById(idRequest)
+  this.getAvailableFlag = SearchStatus.Sending;
+  this.inventoryService.getAvailable(idRequest)
     .subscribe(result => {
       this.productIDSearch = result;
-      this.searchIDFlag = SearchStatus.Received;
+      this.getAvailableFlag = SearchStatus.Received;
     }, error => {
-      this.searchIDFlag = SearchStatus.Error;
+      this.getAvailableFlag = SearchStatus.Error;
     });
 }
 
 async getAvailableValidate() {
   const isBodyValid = await this.valifationService
-  .isRequestBodyValid(this.productIDSearch, defs.definitions.get, 'getAvailable');
-  console.log(isBodyValid);
+  .isRequestBodyValid(this.productIDSearch, defs.definitions.GetAvailableResonse, 'getAvailable');
   if (isBodyValid) {
-    this.searchIDFlag = SearchStatus.Checked;
+    this.getAvailableFlag = SearchStatus.Checked;
   } else {
-    this.searchIDFlag = SearchStatus.Error;
+    this.getAvailableFlag = SearchStatus.Error;
   }
 }
 

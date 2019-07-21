@@ -84,6 +84,21 @@ export class InventoryService {
     return this.http.post(url, body, httpOptions);
   }
 
- }
 
+  getAvailable(request: any): Observable < any >  {
+
+  const url = this.apiEndPoint + '/product/getAvailable';
+  request.parameters = this.parameters;
+  const body = JSON.parse(JSON.stringify(request));
+
+  const httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: 'Basic ' +  btoa(this.username + ':' + this.password)
+    })
+  };
+  return this.http.post(url, body, httpOptions);
+}
+
+}
 
