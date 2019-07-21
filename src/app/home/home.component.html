@@ -57,13 +57,14 @@
         <mat-spinner *ngIf="loading" style="position:absolute;top: 7px; left: 4px;" color="success" diameter="35">
         </mat-spinner>
       </div>
+
       <mat-error *ngIf="error">sorry there is aproblem with the server</mat-error>
 
 
 
     </mat-step>
 
-    <mat-step [stepControl]="productSearchGroup">
+    <mat-step >
       <ng-template matStepLabel>Product Search</ng-template>
 
 
@@ -93,7 +94,7 @@
         </div>
         <mat-error *ngIf="error">sorry there is aproblem with the server</mat-error>
       </div>
-
+      <ngx-json-viewer style="padding: 20px;border: 1px solid grey; display: block; margin-top: 10px;" [json]="productsSearch"></ngx-json-viewer>
 
     </mat-step>
 

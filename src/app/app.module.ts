@@ -20,6 +20,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgxJsonViewerModule } from 'ngx-json-viewer';
 
 @NgModule({
    declarations: [
@@ -43,7 +44,8 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
       MatOptionModule,
       MatSelectModule,
       MatProgressSpinnerModule,
-      NgbModule
+      NgbModule,
+      NgxJsonViewerModule,
    ],
    providers: [
      InventoryService

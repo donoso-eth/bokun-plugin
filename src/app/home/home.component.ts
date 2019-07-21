@@ -122,11 +122,12 @@ export class HomeComponent implements OnInit {
       this.error = false ;
       this.loading = true;
       this.productsSearch = [];
+
       this.inventoryService.getProductSearch(searchRequest)
      .subscribe(result =>  {
-
+      console.log(result);
       this.productsSearch = result;
-      stepper.next();
+
       this.loading = false;
      }, error =>  {
       this.error = true ;
