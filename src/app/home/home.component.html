@@ -1,6 +1,6 @@
 <div class="row">
 
-  <mat-horizontal-stepper class="col-md-6" [linear]="'true'" #stepper="matHorizontalStepper">
+  <mat-vertical-stepper class="col-md-6" [linear]="'true'" #stepper="matVerticalStepper">
     <ng-template matStepperIcon="edit">
       ..
     </ng-template>
@@ -88,18 +88,26 @@
 
       <div>
         <div style="position:relative;">
-          <button class="btn-primary" mat-button (click)="searchProduct(stepper)">Siguiente</button>
-          <mat-spinner *ngIf="loading" style="position:absolute;top: 7px; left: 4px;" color="success" diameter="35">
+          <button *ngIf="searchFlag==0" class="btn-primary" mat-button
+          (click)="searchProduct(stepper)">Post Seatch</button>
+            <button *ngIf="searchFlag==2"  class="btn-primary" mat-button
+            (click)="searchProductValidate()">Validate Types</button>
+            <button *ngIf="searchFlag==4"  class="btn-primary" mat-button
+            (click)="goNext(stepper)">Next</button>
+          <mat-spinner *ngIf="searchFlag==1 || searchFlag==3"  style="position:absolute;top: 7px; left: 4px;" color="success" diameter="35">
           </mat-spinner>
+
         </div>
-        <mat-error *ngIf="error">sorry there is aproblem with the server</mat-error>
+        <mat-error *ngIf="searchFlag==5">sorry there is aproblem with the server</mat-error>
       </div>
+
+
       <ngx-json-viewer style="padding: 20px;border: 1px solid grey; display: block; margin-top: 10px;" [json]="productsSearch"></ngx-json-viewer>
 
     </mat-step>
 
     <mat-step [stepControl]="productIdGroup">
-      <ng-template matStepLabel>Product Search</ng-template>
+      <ng-template matStepLabel>Product Search by ID</ng-template>
       <mat-form-field>
         <mat-label>Products</mat-label>
         <mat-select [formControl]="productIdGroup.controls['externalId']" >
@@ -109,16 +117,42 @@
 
       <div>
         <div style="position:relative;">
-          <button [disabled]="!productIdGroup.valid" [class.btn-primary]="productIdGroup.valid" mat-button
-            (click)="searchProductId(stepper)">Siguiente</button>
-          <mat-spinner *ngIf="loading" style="position:absolute;top: 7px; left: 4px;" color="success" diameter="35">
+          <button *ngIf="searchIDFlag==0" [disabled]="!productIdGroup.valid" [class.btn-primary]="productIdGroup.valid" mat-button
+            (click)="searchProductId(stepper)">Post Seatch</button>
+            <button *ngIf="searchIDFlag==2" class="btn-primary" mat-button
+            (click)="searchProductIDValidate()">Validate Types</button>
+            <button *ngIf="searchIDFlag==4"  class="btn-primary"  mat-button
+            (click)="goNext(stepper)">Next</button>
+          <mat-spinner *ngIf="searchIDFlag==1 || searchIDFlag==3"  style="position:absolute;top: 7px; left: 4px;" color="success" diameter="35">
           </mat-spinner>
+
         </div>
-        <mat-error *ngIf="error">sorry there is aproblem with the server</mat-error>
+        <mat-error *ngIf="searchIDFlag==5">sorry there is aproblem with the server</mat-error>
       </div>
 
+      <ngx-json-viewer style="padding: 20px;border: 1px solid grey; display: block; margin-top: 10px;" [json]="productIDSearch"></ngx-json-viewer>
+
     </mat-step>
-  </mat-horizontal-stepper>
+
+    <mat-step >
+      <ng-template matStepLabel>Get Available CHECK</ng-template>
+
+      <mat-form-field>
+        <mat-label>Select Products</mat-label>
+        <mat-select multiple [formControl]="productIdGroup.controls['externalId']" >
+          <mat-option *ngFor="let product of productsSearch" [value]="product.id">{{product.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput [matDatepicker]="picker" placeholder="Choose a date">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+      </mat-step>
+
+  </mat-vertical-stepper>
   <!--
   <form [formGroup]="productSearchGroup" (ngSubmit)="searchProduct()">
 

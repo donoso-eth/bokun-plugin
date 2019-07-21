@@ -21,6 +21,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { NgxJsonViewerModule } from 'ngx-json-viewer';
+import { ValidationService } from './home/services/validation.service';
 
 @NgModule({
    declarations: [
@@ -48,7 +49,8 @@ import { NgxJsonViewerModule } from 'ngx-json-viewer';
       NgxJsonViewerModule,
    ],
    providers: [
-     InventoryService
+     InventoryService,
+     ValidationService
    ],
    bootstrap: [
       AppComponent

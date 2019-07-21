@@ -55,11 +55,10 @@ export class InventoryService {
   }
 
   getProductSearch(request: any): Observable<any>  {
-    console.log(request);
+
     const url = this.apiEndPoint + '/product/search';
     request.parameters = this.parameters;
     const body = JSON.parse(JSON.stringify(request));
-    console.log(request);
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -73,7 +72,7 @@ export class InventoryService {
   getProductById(request: any): Observable<any>  {
 
     const url = this.apiEndPoint + '/product/getById';
-
+    request.parameters = this.parameters;
     const body = JSON.parse(JSON.stringify(request));
 
     const httpOptions = {
