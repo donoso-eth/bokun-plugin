@@ -90,7 +90,7 @@ export class InventoryService {
   const url = this.apiEndPoint + '/product/getAvailable';
   request.parameters = this.parameters;
   const body = JSON.parse(JSON.stringify(request));
-
+  console.log(body);
   const httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',

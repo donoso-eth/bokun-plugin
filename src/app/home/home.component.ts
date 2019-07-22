@@ -7,11 +7,13 @@ import {
 } from '@angular/forms';
 import { InventoryService } from './services/inventory-service.service';
 import { MatStepper } from '@angular/material/stepper';
-import { PluginConfigurationParameter, BasicProductInfo, ProductDescription } from '../models/bokun-types';
+import { BasicProductInfo, ProductDescription, DatePeriod,
+  ProductsAvailabilityResponse } from '../models/bokun-types';
 import { GuardsCheckEnd } from '@angular/router';
 import { ValidationService } from './services/validation.service';
 import { defs } from './services/definitions';
 import { MatDatepicker } from '@angular/material/datepicker';
+import { datetoDateYMD } from '../helpers/general';
 
 enum SearchStatus {
   Input,
@@ -39,7 +41,7 @@ export class HomeComponent implements OnInit {
 
   productsSearch: Array<BasicProductInfo>;
   productIDSearch: ProductDescription;
-
+  getAvailableResult: Array<ProductsAvailabilityResponse>;
   error: boolean;
   loading: boolean;
   searchFlag: SearchStatus;
@@ -93,6 +95,11 @@ export class HomeComponent implements OnInit {
       this.endPicker.select(x);
 
     });
+
+    this.getAvailableGroup.valueChanges
+    .subscribe(() => this.getAvailableFlag = SearchStatus.Input);
+
+
 
     this.pluginFormGroup = this.formBuilder.group({
       pluginDefinitionGroup: this.pluginDefinitionGroup,
@@ -204,12 +211,24 @@ getAvailable(stepper: MatStepper) {
   const getAvailableRequest = {};
   if (this.productIdGroup.controls.externalId.value !== '') {
     // tslint:disable-next-line:no-string-literal
-    getAvailableRequest ['prodIds'] = this.productIdGroup.controls.prodIds.value;
+    getAvailableRequest ['externalProductIds'] = this.getAvailableGroup.controls.prodIds.value;
   }
+
+  const myRange: DatePeriod =  {
+    from: datetoDateYMD(this.getAvailableGroup.controls.startDate.value),
+    to: datetoDateYMD(this.getAvailableGroup.controls.endDate.value),
+  };
+
+  // tslint:disable-next-line:no-string-literal
+  getAvailableRequest['range'] = myRange;
+  // tslint:disable-next-line:no-string-literal
+  getAvailableRequest ['requiredCapacity'] = this.getAvailableGroup.controls.requiredCapacity.value;
+
   this.getAvailableFlag = SearchStatus.Sending;
-  this.inventoryService.getAvailable(idRequest)
+  this.inventoryService.getAvailable(getAvailableRequest)
     .subscribe(result => {
-      this.productIDSearch = result;
+      this.getAvailableResult = result;
+      console.log(this.getAvailableResult);
       this.getAvailableFlag = SearchStatus.Received;
     }, error => {
       this.getAvailableFlag = SearchStatus.Error;
@@ -218,7 +237,7 @@ getAvailable(stepper: MatStepper) {
 
 async getAvailableValidate() {
   const isBodyValid = await this.valifationService
-  .isRequestBodyValid(this.productIDSearch, defs.definitions.GetAvailableResonse, 'getAvailable');
+  .isRequestBodyValid(this.getAvailableResult, defs.definitions.GetAvailableResponse, 'getAvailable');
   if (isBodyValid) {
     this.getAvailableFlag = SearchStatus.Checked;
   } else {

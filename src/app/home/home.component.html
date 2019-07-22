@@ -137,7 +137,7 @@
     <mat-step [stepControl]="getAvailableGroup">
       <ng-template matStepLabel>Get Available CHECK</ng-template>
 
-      <mat-form-field>
+      <mat-form-field style="display:block;">
         <mat-label>Select Products</mat-label>
         <mat-select multiple [formControl]="getAvailableGroup.controls['prodIds']" >
           <mat-option *ngFor="let product of productsSearch" [value]="product.id">{{product.name}}</mat-option>
@@ -157,13 +157,19 @@
       </mat-form-field>
 
 
+      <mat-form-field style="display:block;width:200px;">
+        <input matInput placeholder="Capacity" type="number"
+          [formControl]="getAvailableGroup.controls['requiredCapacity']" required>
+
+      </mat-form-field>
+
 
       <div>
       <div style="position:relative;">
         <button *ngIf="getAvailableFlag==0" [disabled]="!getAvailableGroup.valid" [class.btn-primary]="getAvailableGroup.valid" mat-button
           (click)="getAvailable(stepper)">Post Seatch</button>
           <button *ngIf="getAvailableFlag==2" class="btn-primary" mat-button
-          (click)="searchProductIDValidate()">Validate Types</button>
+          (click)="getAvailableValidate()">Validate Types</button>
           <button *ngIf="getAvailableFlag==4"  class="btn-primary"  mat-button
           (click)="goNext(stepper)">Next</button>
         <mat-spinner *ngIf="getAvailableFlag==1 || getAvailableFlag==3"  style="position:absolute;top: 7px; left: 4px;" color="success" diameter="35">
@@ -172,7 +178,7 @@
       </div>
       <mat-error *ngIf="getAvailableFlag==5">sorry there is aproblem with the server</mat-error>
     </div>
-
+    <ngx-json-viewer style="padding: 20px;border: 1px solid grey; display: block; margin-top: 10px;" [json]="getAvailableResult"></ngx-json-viewer>
   </mat-step>
   </mat-vertical-stepper>
   <!--

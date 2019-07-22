@@ -774,7 +774,7 @@ export const defs = {
       }
     },
 
-    GetAvailableResonse: {
+    GetAvailableResponse: {
       type: 'array',
       items: {
         $ref: 'defs.json#/definitions/ProductsAvailabilityResponse'
